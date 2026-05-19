@@ -1,37 +1,47 @@
 // src/views/Home.vue
 
 <template>
-  <div>
-    <h1>Hi {{ username }}</h1>
-    <p>{{ secretMessage }}</p>
-    <input type="button" value="Logout" @click="logout" />
-  </div>
+<div>
+
+    <h1>Productos</h1>
+
+    <div
+    v-for="product in products"
+    :key="product.id"
+    >
+
+        <h3>{{product.nombre}}</h3>
+
+        <p>${{product.precio}}</p>
+
+    </div>
+
+</div>
 </template>
 
 <script>
-import AuthService from '@/services/AuthService.js';
+
+import AuthService from '@/services/AuthService';
 
 export default {
-  data() {
-    return {
-      secretMessage: '',
-      username: ''
-    };
-  },
-  async created() {
-    if (!this.$store.getters.isLoggedIn) {
-      this.$router.push('/login');
-    }
 
-    this.username = this.$store.getters.getUser.username;
+    data(){
+        return{
+            products:[]
+        }
+    },
 
-    this.secretMessage = await AuthService.getSecretContent();
-  },
-  methods: {
-    logout() {
-      this.$store.dispatch('logout');
-      this.$router.push('/login');
+    mounted(){
+        this.getProducts();
+    },
+
+    methods:{
+
+        async getProducts(){
+
+            this.products =
+            await AuthService.getProducts();
+        }
     }
-  }
-};
+}
 </script>

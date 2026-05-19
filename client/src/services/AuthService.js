@@ -1,6 +1,7 @@
 // src/services/AuthService.js
 
 import axios from 'axios';
+import authHeader from './auth-header';
 
 const url = 'http://localhost:3000/api/';
 
@@ -17,5 +18,14 @@ export default {
   },
   getSecretContent() {
     return axios.get(url + 'secret-route/').then(response => response.data);
+  },
+  getProducts() {
+
+    return axios
+        .get(url + 'products/', 
+          {
+            headers: authHeader()
+        })
+        .then(response => response.data);
   }
 };
