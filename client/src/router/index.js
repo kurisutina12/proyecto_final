@@ -1,37 +1,76 @@
-// src/router.js (Vue CLI 1.x & 2.x) or src/router/index.js (Vue CLI 3.x or newer)
+import Vue from 'vue'
+import VueRouter from 'vue-router'
 
-import Vue from "vue";
-import Router from "vue-router";
-import Home from "../views/Home.vue";
-import SignUp from "../views/SignUp.vue";
-import Login from "../views/Login.vue";
-import About from "../views/AboutView.vue";
+import LoginView from '../views/LoginView.vue'
+import RegisterView from '../views/RegisterView.vue'
+import ProductsView from '../views/ProductsView.vue'
+import CartView from '../views/CartView.vue'
+import OrdersView from '../views/OrdersView.vue'
+import AdminProductsView from '../views/AdminProductsView.vue'
 
-Vue.use(Router);
+Vue.use(VueRouter)
 
-export default new Router({
-  mode: "history",
-  base: process.env.BASE_URL,
-  routes: [
-    {
-      path: "/",
-      name: "home",
-      component: Home
-    },
-    {
-      path: "/sign-up",
-      name: "sign-up",
-      component: SignUp
-    },
-    {
-      path: "/login",
-      name: "login",
-      component: Login
-    },
-    {
-      path: "/About",
-      name: "login",
-      component: About
-    }
-  ]
-});
+const routes = [
+
+{
+path:'/login',
+component:LoginView
+},
+
+{
+path:'/register',
+component:RegisterView
+},
+
+{
+path:'/products',
+component:ProductsView
+},
+
+{
+path:'/cart',
+component:CartView
+},
+
+{
+path:'/orders',
+component:OrdersView
+},
+
+{
+path:'*',
+redirect:'/login'
+},
+{
+path:'/admin/products',
+component:AdminProductsView,
+beforeEnter:(to,from,next)=>{
+const role =
+  localStorage.getItem('role_id')
+
+if(role == 1){
+
+  next()
+
+}else{
+
+  alert('Solo admin')
+
+  next('/products')
+
+}
+
+}
+},
+,
+
+]
+
+const router = new VueRouter({
+
+mode:'history',
+routes
+
+})
+
+export default router

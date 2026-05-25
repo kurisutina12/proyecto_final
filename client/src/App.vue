@@ -1,33 +1,104 @@
 <template>
-  <div id="app">
-    <nav>
-      <router-link to="/">Home</router-link> |
-      <router-link to="/about">About</router-link> |
-      <router-link to="/sign-up">SignUp</router-link>
-    </nav>
-    <router-view/>
+
+  <div>
+
+<nav class="nav">
+
+  <router-link to="/login">
+    Login
+  </router-link>
+
+  <router-link to="/register">
+    Registro
+  </router-link>
+
+  <router-link to="/products">
+    Productos
+  </router-link>
+
+  <router-link to="/cart">
+    Carrito
+  </router-link>
+
+  <router-link to="/orders">
+    Pedidos
+  </router-link>
+
+  <router-link
+    v-if="isAdmin"
+    to="/admin/products"
+  >
+    Admin
+  </router-link>
+
+</nav>
+
+<router-view />
+
   </div>
+
 </template>
 
+<script>
+
+export default {
+
+  computed: {
+
+    isAdmin() {
+
+      return localStorage.getItem('role_id') == 1
+
+    }
+
+  }
+
+}
+
+</script>
+
 <style>
-#app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
+
+body{
+  font-family: Arial;
+  margin:0;
+  background:#f2f2f2;
 }
 
-nav {
-  padding: 30px;
+.nav{
+  background:#222;
+  padding:15px;
 }
 
-nav a {
-  font-weight: bold;
-  color: #2c3e50;
+.nav a{
+  color:white;
+  margin-right:15px;
+  text-decoration:none;
 }
 
-nav a.router-link-exact-active {
-  color: #42b983;
+.container{
+  width:80%;
+  margin:auto;
+  margin-top:30px;
 }
+
+.card{
+  background:white;
+  padding:20px;
+  margin-bottom:15px;
+  border-radius:10px;
+}
+
+input{
+  width:100%;
+  padding:10px;
+  margin-top:10px;
+}
+
+button{
+  margin-top:10px;
+  padding:10px 20px;
+  cursor:pointer;
+}
+
 </style>
