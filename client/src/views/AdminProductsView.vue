@@ -45,6 +45,13 @@ export default{
   methods:{
 
     async createProduct(){
+    console.log(
+      localStorage.getItem('role_id')
+    )
+
+    console.log(
+      localStorage.getItem('token')
+    )
 
       try{
 

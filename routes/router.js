@@ -228,38 +228,47 @@ userMiddleware.isLoggedIn,
 router.post(
 '/products',
 userMiddleware.isLoggedIn,
-adminMiddleware,
 (req,res)=>{
 
-    const {
-        nombre,
-        precio
-    } = req.body;
+console.log(req.userData);
 
-    pool.query(
-        'INSERT INTO products(nombre,precio) VALUES(?,?)',
-        [nombre,precio],
-        (err,result)=>{
+if(Number(req.userData.role_id) !== 1){
 
-            if(err){
+    return res.status(403).send({
+        message:'No autorizado'
+    });
 
-                console.log(err);
+}
 
-                return res.status(500).send({
-                message: err
-                });
+pool.query(
 
-            }
+    'INSERT INTO products(nombre,precio) VALUES(?,?)',
 
+    [
+        req.body.nombre,
+        req.body.precio
+    ],
 
-            return res.status(201).send({
-                message:'Producto agregado'
-            });
+    (err,result)=>{
+
+        if(err){
+
+            console.log(err);
+
+            return res.status(500).send(err);
 
         }
-    );
+
+        return res.status(201).send({
+            message:'Producto agregado'
+        });
+
+    }
+
+);
 
 });
+
 
 
 // =========================

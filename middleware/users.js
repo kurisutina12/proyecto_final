@@ -36,6 +36,7 @@ module.exports = {
       const token = authHeader.split(' ')[1];
       const decoded = jwt.verify(token,process.env.JWT_SECRET);
       req.userData = decoded;
+      console.log(req.userData);
       next();
     } catch (err) {
       return res.status(400).send({

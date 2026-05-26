@@ -64,16 +64,14 @@ export default{
           response.data.token
         )
 
-        console.log(response.data);
-
         localStorage.setItem(
           'role_id',
           response.data.user.role_id
         )
 
-        alert('Login correcto')
-
-        this.$router.push('/products')
+        console.log(
+          response.data.user.role_id
+        )
 
       }catch(error){
 
